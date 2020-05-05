@@ -19,7 +19,7 @@ const ROUTES = [
 
 export default function(props) {
   return (
-    <Router>
+    <Router basename="/todo-react">
       <Switch>
         {ROUTES.map((route, i) => (
           <Route key={i} {...route} />
