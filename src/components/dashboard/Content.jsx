@@ -6,10 +6,11 @@ import BoxContainer from "../BoxContainer";
 import NewItem from "./NewItem";
 import ToDoList from "./ToDoList";
 import { create, load, save } from "./items";
+import { get as getOption } from "./options";
 
 export default function DashboardContent() {
   const [items, setItems] = useState([]);
-  // const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("");
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -37,14 +38,18 @@ export default function DashboardContent() {
       });
   };
 
-  // const handleFilter = value => setFilter(value);
+  const handleFilter = value => setFilter(value);
 
   const handleChangeItems = items => setItems(items.slice());
 
   return (
     <BoxContainer>
-      <NewItem onEnter={handleCreateItem} />
-      <ToDoList items={items} onChange={handleChangeItems} />
+      <NewItem onChange={handleFilter} onEnter={handleCreateItem} />
+      <ToDoList
+        filter={getOption("filter", v => v === "true") ? filter : ""}
+        items={items}
+        onChange={handleChangeItems}
+      />
     </BoxContainer>
   );
 }
