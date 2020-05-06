@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { useHistory } from "react-router-dom";
 
@@ -7,14 +7,18 @@ import {
   List,
   ListItem,
   ListItemIcon,
+  // ListItemSecondaryAction,
   ListItemText,
   ListSubheader,
-  SwipeableDrawer
+  SwipeableDrawer,
+  Switch
 } from "@material-ui/core";
 
 // see: https://material-ui.com/components/material-icons/
 import GitHubIcon from "@material-ui/icons/GitHub";
 import InfoIcon from "@material-ui/icons/Info";
+
+import { get as getOption, set as setOption } from "./options";
 
 const LISTS = [
   // {
@@ -40,8 +44,22 @@ const LISTS = [
 const LARGER = false;
 
 export default function DashboardDrawer({ open, onClose, onOpen }) {
+  const [filter, setFilter] = useState(getOption("filter", v => v === "true"));
+
+  useEffect(() => {
+    setOption("filter", filter);
+  }, [filter]);
+
   return (
     <SwipeableDrawer open={open} onClose={onClose} onOpen={onOpen}>
+      <List>
+        <ListItem button onClick={() => setFilter(!filter)}>
+          <ListItemIcon>
+            <Switch checked={filter} />
+          </ListItemIcon>
+          <ListItemText primary="Filter" secondary={filter ? "On" : "Off"} />
+        </ListItem>
+      </List>
       {LISTS.map(({ header, items }, listIndex) => (
         <List
           key={listIndex}
