@@ -54,7 +54,8 @@ export default function DashboardDrawer({ open, onClose, onOpen }) {
   }, [filter]);
 
   useEffect(() => {
-    setOption("filter", progress);
+    // BUG: When an option changes, doesn't trigger re-render on other components
+    setOption("progress", progress);
   }, [progress]);
 
   return (

@@ -4,24 +4,31 @@ import { useSnackbar } from "notistack";
 
 import BoxContainer from "../BoxContainer";
 import NewItem from "./NewItem";
+import ProgressBar from "./ProgressBar";
 import ToDoList from "./ToDoList";
+
 import { create, load, save } from "./items";
 import { get as getOption } from "./options";
 
 export default function DashboardContent() {
+  // List of all items
   const [items, setItems] = useState([]);
+  // String to filter items
   const [filter, setFilter] = useState("");
+  // Other hooks
   const { enqueueSnackbar } = useSnackbar();
 
+  // On first render load items
   useEffect(() => {
     load()
-      .then(itms => setItems(itms))
+      .then(items => setItems(items))
       .catch(err => {
         console.error(err);
         enqueueSnackbar(err.message, { variant: "error" });
       });
   }, [enqueueSnackbar]);
 
+  // When an item changes save items
   useEffect(() => {
     save(items).catch(err => {
       console.error(err);
@@ -45,6 +52,7 @@ export default function DashboardContent() {
   return (
     <BoxContainer>
       <NewItem onChange={handleFilter} onEnter={handleCreateItem} />
+      <ProgressBar items={items} />
       <ToDoList
         filter={getOption("filter", v => v === "true") ? filter : ""}
         items={items}
