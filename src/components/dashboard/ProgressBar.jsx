@@ -2,7 +2,7 @@ import React from "react";
 
 import { Box, Collapse, LinearProgress } from "@material-ui/core";
 
-import { get as getOption, set as setOption } from "./options";
+import { get as getOption } from "./options";
 
 export default function ProgressBar({ items = [] }) {
   // Filter completed items
