@@ -45,21 +45,38 @@ const LARGER = false;
 
 export default function DashboardDrawer({ open, onClose, onOpen }) {
   const [filter, setFilter] = useState(getOption("filter", v => v === "true"));
+  const [progress, setProgress] = useState(
+    getOption("progress", v => v === "true")
+  );
 
   useEffect(() => {
     setOption("filter", filter);
   }, [filter]);
 
+  useEffect(() => {
+    setOption("filter", progress);
+  }, [progress]);
+
   return (
     <SwipeableDrawer open={open} onClose={onClose} onOpen={onOpen}>
-      <List>
+      <List subheader={<ListSubheader>Options</ListSubheader>}>
         <ListItem button onClick={() => setFilter(!filter)}>
           <ListItemIcon>
             <Switch checked={filter} />
           </ListItemIcon>
           <ListItemText primary="Filter" secondary={filter ? "On" : "Off"} />
         </ListItem>
+        <ListItem button onClick={() => setProgress(!progress)}>
+          <ListItemIcon>
+            <Switch checked={progress} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Progress"
+            secondary={progress ? "On" : "Off"}
+          />
+        </ListItem>
       </List>
+
       {LISTS.map(({ header, items }, listIndex) => (
         <List
           key={listIndex}
