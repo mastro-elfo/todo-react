@@ -24,16 +24,20 @@ export default function ToDoList({
   items = [],
   onChange = () => {}
 }) {
+  // Handle item changed property
   const handleChange = item => {
     const index = items.findIndex(i => i.uid === item.uid);
     items[index] = item;
     onChange(items);
   };
 
+  // Filter active items
+  const activeItems = items.filter(({ deleted }) => !deleted);
+
+  // Apply filter on active items if filter option is active
   const lowerCaseFilter = filter.toLowerCase();
-  const filterItems = items.filter(
-    ({ deleted, value }) =>
-      !deleted && (!filter || value.includes(lowerCaseFilter))
+  const filterItems = activeItems.filter(
+    ({ value }) => !filter || value.includes(lowerCaseFilter)
   );
 
   return (
