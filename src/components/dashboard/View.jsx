@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import Page from "../Page";
 import Header from "./Header";
@@ -7,12 +7,6 @@ import Drawer from "./Drawer";
 
 export default function DashboardView() {
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    // on load
-    // e.g. document.title = "..."
-    return () => {};
-  }, []);
 
   return (
     <Page
