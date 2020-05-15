@@ -20,7 +20,11 @@ export default function DashboardContent() {
 
   // On first render load items
   useEffect(() => {
+    // Load items
     load()
+      // Filter !deleted
+      .then(items => items.filter(({ deleted }) => !deleted))
+      // Set state
       .then(items => setItems(items))
       .catch(err => {
         console.error(err);
