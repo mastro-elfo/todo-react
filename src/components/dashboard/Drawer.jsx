@@ -48,13 +48,13 @@ export default function DashboardDrawer({ open, onClose, onOpen }) {
   const [progress, setProgress] = useState(
     getOption("progress", v => v === "true")
   );
+  // TODO: Add options showDeleted
 
   useEffect(() => {
     setOption("filter", filter);
   }, [filter]);
 
   useEffect(() => {
-    // BUG: When an option changes, doesn't trigger re-render on other components
     setOption("progress", progress);
   }, [progress]);
 
