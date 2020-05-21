@@ -1,5 +1,6 @@
 import React from "react";
 
+// TODO: use HashRouter because on github BrowserRouter doesn't work properly
 import {
   // See https://reacttraining.com/react-router/web/guides/quick-start for details
   BrowserRouter as Router,
