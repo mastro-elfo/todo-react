@@ -1,6 +1,5 @@
 import React from "react";
 
-// TODO: Check this: https://material-ui.com/system/display/#display-in-print
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({

@@ -54,6 +54,5 @@ const renderers = {
 };
 
 export default function Markdown(props) {
-  // TODO: if source is a function, evaluate (check if it already does)
   return <ReactMarkdown {...props} renderers={renderers} />;
 }

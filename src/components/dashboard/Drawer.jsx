@@ -93,8 +93,6 @@ export default function DashboardDrawer({ open, onClose, onOpen }) {
 }
 
 const DrawerItem = ({ type, title, href, Icon }) => {
-  // TODO: add primary && secondary props
-  // TODO: handle external links
   const { push } = useHistory();
 
   if (type === "divider") {
