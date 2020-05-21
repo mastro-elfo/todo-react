@@ -2,7 +2,7 @@
   "name": "todo-react",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mastro-elfo.github.io/todo-react",
+  "homepage": "https://mastro-elfo.github.io/todo-react/",
   "dependencies": {
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
