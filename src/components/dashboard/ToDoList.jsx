@@ -18,6 +18,9 @@ import {
 } from "@material-ui/core";
 
 import CancelIcon from "@material-ui/icons/Cancel";
+import DeleteIcon from "@material-ui/icons/Delete";
+
+import { get as getOption } from "./options";
 
 export default function ToDoList({
   filter = "",
@@ -31,13 +34,15 @@ export default function ToDoList({
     onChange(items);
   };
 
-  // Filter active items
-  const activeItems = items.filter(({ deleted }) => !deleted);
+  const optShowDeleted = getOption("showDeleted", v => v === "true");
+  const optFilter = getOption("filter", v => v === "true");
 
   // Apply filter on active items if filter option is active
   const lowerCaseFilter = filter.toLowerCase();
-  const filterItems = activeItems.filter(
-    ({ value }) => !filter || value.includes(lowerCaseFilter)
+  const filterItems = items.filter(
+    ({ value, deleted }) =>
+      (!optFilter || !filter || value.includes(lowerCaseFilter)) &&
+      (optShowDeleted || !deleted)
   );
 
   return (
@@ -74,7 +79,7 @@ const useStyle = makeStyles({
 });
 
 function ToDoItem({ onChange, item }) {
-  const { complete, value } = item;
+  const { complete, deleted, value } = item;
 
   const [edit, setEdit] = useState(false);
   const [snackbar, setSnackbar] = useState();
@@ -106,6 +111,7 @@ function ToDoItem({ onChange, item }) {
     closeSnackbar(snackbar);
   };
 
+  // TODO: add title if item is deleted
   return (
     <ListItem button onClick={() => setEdit(true)}>
       <ListItemIcon>
@@ -115,6 +121,7 @@ function ToDoItem({ onChange, item }) {
           onClick={handleToggle}
         />
       </ListItemIcon>
+
       {edit ? (
         <TextField
           autoFocus
@@ -126,13 +133,25 @@ function ToDoItem({ onChange, item }) {
       ) : (
         <ListItemText primary={value} />
       )}
-      <ListItemSecondaryAction
-        className={edit ? classes.Visible : classes.Hidden}
-      >
-        <IconButton onMouseDown={handleDelete} title="Click to delete">
-          <CancelIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
+
+      {
+        // TODO: If deleted:
+        // action delete forever
+        // action restore
+      }
+      {deleted ? (
+        <ListItemSecondaryAction>
+          <DeleteIcon />
+        </ListItemSecondaryAction>
+      ) : (
+        <ListItemSecondaryAction
+          className={edit ? classes.Visible : classes.Hidden}
+        >
+          <IconButton onMouseDown={handleDelete} title="Click to delete">
+            <CancelIcon />
+          </IconButton>
+        </ListItemSecondaryAction>
+      )}
     </ListItem>
   );
 }

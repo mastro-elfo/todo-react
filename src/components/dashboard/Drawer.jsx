@@ -48,7 +48,9 @@ export default function DashboardDrawer({ open, onClose, onOpen }) {
   const [progress, setProgress] = useState(
     getOption("progress", v => v === "true")
   );
-  // TODO: Add options showDeleted
+  const [showDeleted, setShowDeleted] = useState(
+    getOption("showDeleted", v => v === "true")
+  );
 
   useEffect(() => {
     setOption("filter", filter);
@@ -58,9 +60,13 @@ export default function DashboardDrawer({ open, onClose, onOpen }) {
     setOption("progress", progress);
   }, [progress]);
 
+  useEffect(() => {
+    setOption("showDeleted", showDeleted);
+  }, [showDeleted]);
+
   return (
     <SwipeableDrawer open={open} onClose={onClose} onOpen={onOpen}>
-      <List subheader={<ListSubheader>Options</ListSubheader>}>
+      <List subheader={<ListSubheader>Preferences</ListSubheader>}>
         <ListItem button onClick={() => setFilter(!filter)}>
           <ListItemIcon>
             <Switch checked={filter} />
@@ -74,6 +80,15 @@ export default function DashboardDrawer({ open, onClose, onOpen }) {
           <ListItemText
             primary="Progress"
             secondary={progress ? "On" : "Off"}
+          />
+        </ListItem>
+        <ListItem button onClick={() => setShowDeleted(!showDeleted)}>
+          <ListItemIcon>
+            <Switch checked={showDeleted} />
+          </ListItemIcon>
+          <ListItemText
+            primary="Show deleted"
+            secondary={showDeleted ? "On" : "Off"}
           />
         </ListItem>
       </List>
